@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useParams, useNavigate } from 'react-router-dom';
 import { fetchThreadDetail } from '../redux/thunks/threadThunks';
 import { createComment } from '../redux/thunks/commentThunks';
-import { formatDate } from '../utils/helpers';
+import { formatDate, decodeHtmlEntities } from '../utils/helpers';
 import CommentItem from '../components/Comment/CommentItem';
 import './ThreadDetailPage.css';
 
@@ -77,9 +77,11 @@ function ThreadDetailPage() {
           </div>
         </header>
 
-        <div className="thread-body">
-          {body}
-        </div>
+        <div
+          className="thread-body"
+          // eslint-disable-next-line react/no-danger
+          dangerouslySetInnerHTML={{ __html: decodeHtmlEntities(body) }}
+        />
       </article>
 
       <section className="comments-section">

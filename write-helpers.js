@@ -1,4 +1,6 @@
-// Format date to readable format
+const fs = require('fs');
+
+const content = `// Format date to readable format
 export const formatDate = (dateString) => {
   const date = new Date(dateString);
   const now = new Date();
@@ -12,19 +14,19 @@ export const formatDate = (dateString) => {
   // If less than 1 hour ago
   if (diff < 3600000) {
     const minutes = Math.floor(diff / 60000);
-    return `${minutes} minute${minutes > 1 ? 's' : ''} ago`;
+    return \`\${minutes} minute\${minutes > 1 ? 's' : ''} ago\`;
   }
 
   // If less than 1 day ago
   if (diff < 86400000) {
     const hours = Math.floor(diff / 3600000);
-    return `${hours} hour${hours > 1 ? 's' : ''} ago`;
+    return \`\${hours} hour\${hours > 1 ? 's' : ''} ago\`;
   }
 
   // If less than 1 week ago
   if (diff < 604800000) {
     const days = Math.floor(diff / 86400000);
-    return `${days} day${days > 1 ? 's' : ''} ago`;
+    return \`\${days} day\${days > 1 ? 's' : ''} ago\`;
   }
 
   // Otherwise show the date
@@ -38,7 +40,7 @@ export const formatDate = (dateString) => {
 // Truncate text
 export const truncateText = (text, length = 100) => {
   if (text.length > length) {
-    return `${text.substring(0, length)}...`;
+    return \`\${text.substring(0, length)}...\`;
   }
   return text;
 };
@@ -52,7 +54,7 @@ export const getUserInitials = (name) => {
 
 // Validate email
 export const isValidEmail = (email) => {
-  const emailRegex = /^[^s@]+@[^s@]+.[^s@]+$/;
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   return emailRegex.test(email);
 };
 
@@ -70,3 +72,7 @@ export const decodeHtmlEntities = (text) => {
     .replace(/&#39;/g, "'")
     .replace(/&nbsp;/g, ' ');
 };
+`;
+
+fs.writeFileSync('src/utils/helpers.js', content);
+console.log('File written successfully');

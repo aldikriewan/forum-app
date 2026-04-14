@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
-import { formatDate } from '../../utils/helpers';
+import { formatDate, decodeHtmlEntities } from '../../utils/helpers';
 import { upVoteComment, downVoteComment, neutralizeCommentVote } from '../../redux/thunks/commentThunks';
 import './Comment.css';
 
@@ -58,9 +58,11 @@ function CommentItem({ comment, threadId }) {
         </div>
       </div>
 
-      <div className="comment-content">
-        {content}
-      </div>
+      <div
+        className="comment-content"
+        // eslint-disable-next-line react/no-danger
+        dangerouslySetInnerHTML={{ __html: decodeHtmlEntities(content) }}
+      />
 
       <div className="comment-footer">
         <button
