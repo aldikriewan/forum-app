@@ -1,5 +1,10 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import apiClient from '../../api/apiClient';
+import {
+  toggleCommentUpVote,
+  toggleCommentDownVote,
+  toggleCommentNeutralVote,
+} from '../slices/threadSlice';
 import { fetchThreadDetail } from './threadThunks';
 import { setLoading } from '../slices/uiSlice';
 
@@ -22,12 +27,17 @@ export const createComment = createAsyncThunk(
 
 export const upVoteComment = createAsyncThunk(
   'comments/upVoteComment',
-  async({ threadId, commentId }, { dispatch, rejectWithValue }) => {
+  async({ threadId, commentId }, { dispatch, getState, rejectWithValue }) => {
+    const { auth } = getState();
+    const userId = auth.user.id;
+
+    dispatch(toggleCommentUpVote({ threadId, commentId, userId }));
+
     try {
       await apiClient.post(`/threads/${threadId}/comments/${commentId}/up-vote`);
-      // Refresh thread detail to get updated votes
-      dispatch(fetchThreadDetail(threadId));
     } catch (error) {
+      // Rollback
+      dispatch(toggleCommentUpVote({ threadId, commentId, userId }));
       return rejectWithValue(error.response?.data?.message || 'Failed to up-vote comment');
     }
   },
@@ -35,12 +45,17 @@ export const upVoteComment = createAsyncThunk(
 
 export const downVoteComment = createAsyncThunk(
   'comments/downVoteComment',
-  async({ threadId, commentId }, { dispatch, rejectWithValue }) => {
+  async({ threadId, commentId }, { dispatch, getState, rejectWithValue }) => {
+    const { auth } = getState();
+    const userId = auth.user.id;
+
+    dispatch(toggleCommentDownVote({ threadId, commentId, userId }));
+
     try {
       await apiClient.post(`/threads/${threadId}/comments/${commentId}/down-vote`);
-      // Refresh thread detail to get updated votes
-      dispatch(fetchThreadDetail(threadId));
     } catch (error) {
+      // Rollback
+      dispatch(toggleCommentDownVote({ threadId, commentId, userId }));
       return rejectWithValue(error.response?.data?.message || 'Failed to down-vote comment');
     }
   },
@@ -48,12 +63,17 @@ export const downVoteComment = createAsyncThunk(
 
 export const neutralizeCommentVote = createAsyncThunk(
   'comments/neutralizeCommentVote',
-  async({ threadId, commentId }, { dispatch, rejectWithValue }) => {
+  async({ threadId, commentId }, { dispatch, getState, rejectWithValue }) => {
+    const { auth } = getState();
+    const userId = auth.user.id;
+
+    dispatch(toggleCommentNeutralVote({ threadId, commentId, userId }));
+
     try {
       await apiClient.post(`/threads/${threadId}/comments/${commentId}/neutral-vote`);
-      // Refresh thread detail to get updated votes
-      dispatch(fetchThreadDetail(threadId));
     } catch (error) {
+      // Fallback
+      dispatch(fetchThreadDetail(threadId));
       return rejectWithValue(error.response?.data?.message || 'Failed to neutralize comment vote');
     }
   },

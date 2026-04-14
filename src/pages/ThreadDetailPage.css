@@ -73,8 +73,42 @@
 }
 
 .thread-votes {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
   color: #7f8c8d;
   font-size: 0.95rem;
+}
+
+.vote-btn {
+  background: none;
+  border: 1px solid #bdc3c7;
+  padding: 0.4rem 0.8rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.vote-btn:hover {
+  border-color: #3498db;
+}
+
+.vote-btn.up-vote.active {
+  background-color: #d5f4e6;
+  border-color: #27ae60;
+}
+
+.vote-btn.down-vote.active {
+  background-color: #fadbd8;
+  border-color: #e74c3c;
+}
+
+.vote-btn.neutralize-vote:hover {
+  background-color: #f0f0f0;
 }
 
 .thread-body {

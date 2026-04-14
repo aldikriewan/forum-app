@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { fetchThreads } from '../redux/thunks/threadThunks';
+import { asyncPopulateUsersAndThreads } from '../redux/thunks/threadThunks';
 import { setFilterCategory } from '../redux/slices/threadSlice';
 import ThreadItem from '../components/Thread/ThreadItem';
 import './HomePage.css';
@@ -13,11 +13,11 @@ function HomePage() {
   const [ searchTerm, setSearchTerm ] = useState('');
 
   useEffect(() => {
-    dispatch(fetchThreads());
+    dispatch(asyncPopulateUsersAndThreads());
   }, [ dispatch ]);
 
-  // Get unique categories from threads
-  const categories = [ ...new Set(threads.map((t) => t.category).filter(Boolean)) ];
+  // Get unique categories from threads using Array.from and Set
+  const categories = Array.from(new Set(threads.map((t) => t.category).filter(Boolean)));
 
   // Filter threads based on search term and category
   const filteredThreads = threads.filter((thread) => {

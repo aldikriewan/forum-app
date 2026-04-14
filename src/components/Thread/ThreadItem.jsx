@@ -7,11 +7,16 @@ import './Thread.css';
 
 function ThreadItem({ thread }) {
   const users = useSelector((state) => state.users.users);
+  const currentUser = useSelector((state) => state.auth.user);
   const {
     id, title, body, createdAt, ownerId, totalComments, upVotesBy, downVotesBy,
   } = thread;
 
-  const authorName = users[ownerId]?.name || 'Loading...';
+  let authorName = users[ownerId]?.name;
+  if (!authorName && currentUser && currentUser.id === ownerId) {
+    authorName = currentUser.name;
+  }
+  authorName = authorName || 'Loading...';
 
   return (
     <div className="thread-item">

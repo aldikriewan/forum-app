@@ -13,7 +13,7 @@ function ThreadDetailPage() {
   const navigate = useNavigate();
   const [ commentContent, setCommentContent ] = useState('');
   const { detailMap } = useSelector((state) => state.threads);
-  const { isLoggedIn } = useSelector((state) => state.auth);
+  const { isLoggedIn, user } = useSelector((state) => state.auth);
   const threadDetail = detailMap[threadId];
 
   useEffect(() => {
@@ -40,12 +40,23 @@ function ThreadDetailPage() {
     });
   };
 
+  const {
+    title, body, createdAt, owner, comments = [], upVotesBy = [], downVotesBy = [],
+  } = threadDetail || {};
+
+  const userHasUpVoted = user && upVotesBy.includes(user.id);
+  const userHasDownVoted = user && downVotesBy.includes(user.id);
+
   const handleUpVote = () => {
     if (!isLoggedIn) {
       navigate('/login');
       return;
     }
-    dispatch(upVoteThread(threadId));
+    if (userHasUpVoted) {
+      dispatch(neutralizeThreadVote(threadId));
+    } else {
+      dispatch(upVoteThread(threadId));
+    }
   };
 
   const handleDownVote = () => {
@@ -53,7 +64,11 @@ function ThreadDetailPage() {
       navigate('/login');
       return;
     }
-    dispatch(downVoteThread(threadId));
+    if (userHasDownVoted) {
+      dispatch(neutralizeThreadVote(threadId));
+    } else {
+      dispatch(downVoteThread(threadId));
+    }
   };
 
   const handleNeutralizeVote = () => {
@@ -67,10 +82,6 @@ function ThreadDetailPage() {
   if (!threadDetail) {
     return <div className="thread-detail-loading">Memuat thread...</div>;
   }
-
-  const {
-    title, body, createdAt, owner, comments = [], upVotesBy = [], downVotesBy = [],
-  } = threadDetail;
 
   return (
     <div className="thread-detail-page">
@@ -95,11 +106,29 @@ function ThreadDetailPage() {
             </div>
 
             <div className="thread-votes">
-              <button type="button" onClick={handleUpVote} className="vote-btn">👍</button>
+              <button
+                type="button"
+                onClick={handleUpVote}
+                className={`vote-btn up-vote ${userHasUpVoted ? 'active' : ''}`}
+              >
+                👍
+              </button>
               <span>{upVotesBy.length}</span>
-              <button type="button" onClick={handleDownVote} className="vote-btn">👎</button>
+              <button
+                type="button"
+                onClick={handleDownVote}
+                className={`vote-btn down-vote ${userHasDownVoted ? 'active' : ''}`}
+              >
+                👎
+              </button>
               <span>{downVotesBy.length}</span>
-              <button type="button" onClick={handleNeutralizeVote} className="vote-btn">😐</button>
+              <button
+                type="button"
+                onClick={handleNeutralizeVote}
+                className="vote-btn neutralize-vote"
+              >
+                😐
+              </button>
             </div>
           </div>
         </header>

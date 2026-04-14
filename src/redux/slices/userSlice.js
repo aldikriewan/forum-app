@@ -20,6 +20,10 @@ const userSlice = createSlice({
     },
     setUsers(state, action) {
       state.list = action.payload;
+      state.users = action.payload.reduce((acc, user) => {
+        acc[user.id] = user;
+        return acc;
+      }, {});
       state.loading = false;
       state.error = null;
     },

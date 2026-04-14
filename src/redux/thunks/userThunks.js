@@ -1,6 +1,20 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import apiClient from '../../api/apiClient';
-import { setUser } from '../slices/userSlice';
+import { setUser, setUsers } from '../slices/userSlice';
+
+export const fetchUsers = createAsyncThunk(
+  'users/fetchUsers',
+  async(_, { dispatch, rejectWithValue }) => {
+    try {
+      const response = await apiClient.get('/users');
+      const { users } = response.data.data;
+      dispatch(setUsers(users));
+      return users;
+    } catch (error) {
+      return rejectWithValue(error.response?.data?.message || 'Failed to fetch users');
+    }
+  },
+);
 
 export const fetchUser = createAsyncThunk(
   'users/fetchUser',
