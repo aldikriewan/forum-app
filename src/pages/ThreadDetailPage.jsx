@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams, useNavigate } from 'react-router-dom';
 import { fetchThreadDetail } from '../redux/thunks/threadThunks';
-import { addComment } from '../redux/thunks/commentThunks';
+import { createComment } from '../redux/thunks/commentThunks';
 import { formatDate } from '../utils/helpers';
 import CommentItem from '../components/Comment/CommentItem';
 import './ThreadDetailPage.css';
@@ -35,7 +35,7 @@ function ThreadDetailPage() {
       return;
     }
 
-    dispatch(addComment({ threadId, content: commentContent })).then(() => {
+    dispatch(createComment({ threadId, content: commentContent })).then(() => {
       setCommentContent('');
     });
   };
