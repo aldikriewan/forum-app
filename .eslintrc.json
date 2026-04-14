@@ -6,6 +6,7 @@
   },
   "extends": [
     "eslint:recommended",
+    "airbnb",
     "plugin:react/recommended"
   ],
   "parserOptions": {
@@ -20,6 +21,13 @@
     "import"
   ],
   "rules": {
+    "linebreak-style": "off",
+    "object-curly-newline": "off",
+    "no-param-reassign": "off",
+    "consistent-return": "off",
+    "import/extensions": "off",
+    "react/jsx-filename-extension": "off",
+    "import/prefer-default-export": "off",
     "react/react-in-jsx-scope": "off",
     "react/prop-types": "warn",
     "react/jsx-props-no-spreading": "warn",

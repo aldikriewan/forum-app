@@ -57,6 +57,4 @@ export const isValidEmail = (email) => {
 };
 
 // Check if user has voted
-export const hasUserVoted = (userId, votesArray = []) => {
-  return votesArray.includes(userId);
-};
+export const hasUserVoted = (userId, votesArray = []) => votesArray.includes(userId);

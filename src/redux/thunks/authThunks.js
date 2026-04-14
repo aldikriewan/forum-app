@@ -4,7 +4,7 @@ import { loginSuccess, registerSuccess } from '../slices/authSlice';
 
 export const loginUser = createAsyncThunk(
   'auth/loginUser',
-  async ({ email, password }, { dispatch, rejectWithValue }) => {
+  async({ email, password }, { dispatch, rejectWithValue }) => {
     try {
       const response = await apiClient.post('/login', { email, password });
       const { token } = response.data.data;
@@ -13,7 +13,7 @@ export const loginUser = createAsyncThunk(
       const userResponse = await apiClient.get('/users/me', {
         headers: { Authorization: `Bearer ${token}` },
       });
-      const user = userResponse.data.data.user;
+      const { user } = userResponse.data.data;
 
       dispatch(loginSuccess({ token, user }));
       return { token, user };
@@ -25,10 +25,10 @@ export const loginUser = createAsyncThunk(
 
 export const registerUser = createAsyncThunk(
   'auth/registerUser',
-  async ({ name, email, password }, { dispatch, rejectWithValue }) => {
+  async({ name, email, password }, { dispatch, rejectWithValue }) => {
     try {
       const response = await apiClient.post('/register', { name, email, password });
-      const user = response.data.data.user;
+      const { user } = response.data.data;
       dispatch(registerSuccess(user));
       return user;
     } catch (error) {
@@ -39,7 +39,7 @@ export const registerUser = createAsyncThunk(
 
 export const getCurrentUser = createAsyncThunk(
   'auth/getCurrentUser',
-  async (_, { rejectWithValue }) => {
+  async(_, { rejectWithValue }) => {
     try {
       const response = await apiClient.get('/users/me');
       return response.data.data.user;

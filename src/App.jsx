@@ -33,9 +33,13 @@ function AppContent() {
 
 function App() {
   return (
-    <Provider store={store}>
-      <AppContent />
-    </Provider>
+    <React.StrictMode>
+      <Provider
+        store={store}
+      >
+        <AppContent />
+      </Provider>
+    </React.StrictMode>
   );
 }
 

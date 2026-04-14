@@ -5,11 +5,11 @@ import { setLoading } from '../slices/uiSlice';
 
 export const fetchThreads = createAsyncThunk(
   'threads/fetchThreads',
-  async (_, { dispatch, rejectWithValue }) => {
+  async(_, { dispatch, rejectWithValue }) => {
     try {
       dispatch(setLoading({ status: true, text: 'Loading threads...' }));
       const response = await apiClient.get('/threads');
-      const threads = response.data.data.threads;
+      const { threads } = response.data.data;
       dispatch(setThreadList(threads));
       dispatch(setLoading({ status: false }));
       return threads;
@@ -22,7 +22,7 @@ export const fetchThreads = createAsyncThunk(
 
 export const fetchThreadDetail = createAsyncThunk(
   'threads/fetchThreadDetail',
-  async (threadId, { dispatch, rejectWithValue }) => {
+  async(threadId, { dispatch, rejectWithValue }) => {
     try {
       dispatch(setLoading({ status: true, text: 'Loading thread details...' }));
       const response = await apiClient.get(`/threads/${threadId}`);
@@ -39,7 +39,7 @@ export const fetchThreadDetail = createAsyncThunk(
 
 export const createThread = createAsyncThunk(
   'threads/createThread',
-  async ({ title, body, category = '' }, { dispatch, rejectWithValue }) => {
+  async({ title, body, category = '' }, { dispatch, rejectWithValue }) => {
     try {
       dispatch(setLoading({ status: true, text: 'Creating thread...' }));
       const response = await apiClient.post('/threads', { title, body, category });
@@ -56,7 +56,7 @@ export const createThread = createAsyncThunk(
 
 export const upVoteThread = createAsyncThunk(
   'threads/upVoteThread',
-  async (threadId, { dispatch, rejectWithValue, getState }) => {
+  async(threadId, { dispatch, rejectWithValue, getState }) => {
     try {
       await apiClient.post(`/threads/${threadId}/up-vote`);
       // Refresh thread detail
@@ -69,7 +69,7 @@ export const upVoteThread = createAsyncThunk(
 
 export const downVoteThread = createAsyncThunk(
   'threads/downVoteThread',
-  async (threadId, { dispatch, rejectWithValue }) => {
+  async(threadId, { dispatch, rejectWithValue }) => {
     try {
       await apiClient.post(`/threads/${threadId}/down-vote`);
       // Refresh thread detail
@@ -82,7 +82,7 @@ export const downVoteThread = createAsyncThunk(
 
 export const neutralizeThreadVote = createAsyncThunk(
   'threads/neutralizeThreadVote',
-  async (threadId, { dispatch, rejectWithValue }) => {
+  async(threadId, { dispatch, rejectWithValue }) => {
     try {
       await apiClient.post(`/threads/${threadId}/neutral-vote`);
       // Refresh thread detail

@@ -5,11 +5,11 @@ import { setLoading } from '../slices/uiSlice';
 
 export const fetchLeaderboards = createAsyncThunk(
   'leaderboards/fetchLeaderboards',
-  async (_, { dispatch, rejectWithValue }) => {
+  async(_, { dispatch, rejectWithValue }) => {
     try {
       dispatch(setLoading({ status: true, text: 'Loading leaderboards...' }));
       const response = await apiClient.get('/leaderboards');
-      const leaderboards = response.data.data.leaderboards;
+      const { leaderboards } = response.data.data;
       dispatch(setLeaderboards(leaderboards));
       dispatch(setLoading({ status: false }));
       return leaderboards;

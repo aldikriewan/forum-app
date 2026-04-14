@@ -5,7 +5,7 @@ import { setLoading } from '../slices/uiSlice';
 
 export const createComment = createAsyncThunk(
   'comments/createComment',
-  async ({ threadId, content }, { dispatch, rejectWithValue }) => {
+  async({ threadId, content }, { dispatch, rejectWithValue }) => {
     try {
       dispatch(setLoading({ status: true, text: 'Creating comment...' }));
       const response = await apiClient.post(`/threads/${threadId}/comments`, { content });
@@ -22,7 +22,7 @@ export const createComment = createAsyncThunk(
 
 export const upVoteComment = createAsyncThunk(
   'comments/upVoteComment',
-  async ({ threadId, commentId }, { dispatch, rejectWithValue }) => {
+  async({ threadId, commentId }, { dispatch, rejectWithValue }) => {
     try {
       await apiClient.post(`/threads/${threadId}/comments/${commentId}/up-vote`);
       // Refresh thread detail to get updated votes
@@ -35,7 +35,7 @@ export const upVoteComment = createAsyncThunk(
 
 export const downVoteComment = createAsyncThunk(
   'comments/downVoteComment',
-  async ({ threadId, commentId }, { dispatch, rejectWithValue }) => {
+  async({ threadId, commentId }, { dispatch, rejectWithValue }) => {
     try {
       await apiClient.post(`/threads/${threadId}/comments/${commentId}/down-vote`);
       // Refresh thread detail to get updated votes
@@ -48,7 +48,7 @@ export const downVoteComment = createAsyncThunk(
 
 export const neutralizeCommentVote = createAsyncThunk(
   'comments/neutralizeCommentVote',
-  async ({ threadId, commentId }, { dispatch, rejectWithValue }) => {
+  async({ threadId, commentId }, { dispatch, rejectWithValue }) => {
     try {
       await apiClient.post(`/threads/${threadId}/comments/${commentId}/neutral-vote`);
       // Refresh thread detail to get updated votes
