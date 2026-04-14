@@ -35,6 +35,12 @@ export const formatDate = (dateString) => {
   });
 };
 
+// Strip HTML tags from text
+export const stripHtml = (html) => {
+  if (!html) return '';
+  return html.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
+};
+
 // Truncate text
 export const truncateText = (text, length = 100) => {
   if (text.length > length) {
@@ -67,6 +73,6 @@ export const decodeHtmlEntities = (text) => {
     .replace(/>/g, '>')
     .replace(/&/g, '&')
     .replace(/"/g, '"')
-    .replace(/&#39;/g, "'")
+    .replace(/&#39;/g, '\'')
     .replace(/&nbsp;/g, ' ');
 };

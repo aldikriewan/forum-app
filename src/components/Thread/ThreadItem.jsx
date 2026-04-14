@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { formatDate, truncateText } from '../../utils/helpers';
+import { formatDate, truncateText, stripHtml } from '../../utils/helpers';
 import './Thread.css';
 
 function ThreadItem({ thread }) {
@@ -18,7 +18,7 @@ function ThreadItem({ thread }) {
           <h3>{title}</h3>
         </Link>
 
-        {body && <p className="thread-body">{truncateText(body, 150)}</p>}
+        {body && <p className="thread-body">{truncateText(stripHtml(body), 150)}</p>}
 
         <div className="thread-meta">
           <span className="author-info">
