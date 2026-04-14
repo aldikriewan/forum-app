@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchLeaderboards } from '../../redux/thunks/leaderboardThunks';
+import { fetchLeaderboards } from '../redux/thunks/leaderboardThunks';
 import './LeaderboardPage.css';
 
 function LeaderboardPage() {

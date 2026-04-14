@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { fetchThreads } from '../../redux/thunks/threadThunks';
-import { setFilterCategory } from '../../redux/slices/threadSlice';
-import ThreadItem from '../Thread/ThreadItem';
+import { fetchThreads } from '../redux/thunks/threadThunks';
+import { setFilterCategory } from '../redux/slices/threadSlice';
+import ThreadItem from '../components/Thread/ThreadItem';
 import './HomePage.css';
 
 function HomePage() {

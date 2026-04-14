@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { createThread } from '../../redux/thunks/threadThunks';
+import { createThread } from '../redux/thunks/threadThunks';
 import './CreateThreadPage.css';
 
 function CreateThreadPage() {

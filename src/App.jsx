@@ -12,6 +12,7 @@ import LoginForm from './components/Auth/LoginForm';
 import RegisterForm from './components/Auth/RegisterForm';
 import './App.css';
 
+// Forum Diskusi App with Redux State Management
 function AppContent() {
   return (
     <Router>
