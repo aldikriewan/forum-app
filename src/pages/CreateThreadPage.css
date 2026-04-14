@@ -1,0 +1,133 @@
+.create-thread-page {
+  background-color: #ecf0f1;
+  min-height: calc(100vh - 80px);
+  padding: 2rem;
+}
+
+.create-thread-container {
+  max-width: 700px;
+  margin: 0 auto;
+  background-color: white;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.create-thread-container h1 {
+  margin-top: 0;
+  color: #2c3e50;
+  margin-bottom: 1.5rem;
+}
+
+.create-thread-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.form-group label {
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+.form-input,
+.form-group input,
+.form-group textarea {
+  padding: 0.75rem;
+  border: 1px solid #bdc3c7;
+  border-radius: 4px;
+  font-size: 1rem;
+  font-family: inherit;
+  resize: vertical;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.form-input,
+.form-group input,
+.form-group textarea {
+  background-color: white;
+}
+
+.form-input:focus,
+.form-group input:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: #3498db;
+  box-shadow: 0 0 5px rgba(52, 152, 219, 0.2);
+}
+
+.form-input.input-error,
+.form-group input.input-error,
+.form-group textarea.input-error {
+  border-color: #e74c3c;
+  background-color: #fadbd8;
+}
+
+.error-text {
+  color: #e74c3c;
+  font-size: 0.875rem;
+}
+
+.error-message {
+  background-color: #fadbd8;
+  color: #e74c3c;
+  padding: 0.75rem;
+  border-radius: 4px;
+  text-align: center;
+}
+
+.form-actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.submit-btn,
+.cancel-btn {
+  flex: 1;
+  padding: 0.75rem;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s;
+  font-weight: 600;
+}
+
+.btn-primary {
+  background-color: #3498db;
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: #2980b9;
+}
+
+.btn-secondary {
+  background-color: #95a5a6;
+  color: white;
+}
+
+.btn-secondary:hover {
+  background-color: #7f8c8d;
+}
+
+@media (max-width: 768px) {
+  .create-thread-page {
+    padding: 1rem;
+  }
+
+  .create-thread-container {
+    padding: 1rem;
+  }
+
+  .form-actions {
+    flex-direction: column;
+  }
+}

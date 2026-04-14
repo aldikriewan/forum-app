@@ -1,0 +1,134 @@
+.leaderboard-page {
+  background-color: #ecf0f1;
+  min-height: calc(100vh - 80px);
+  padding: 2rem;
+}
+
+.leaderboard-container {
+  max-width: 700px;
+  margin: 0 auto;
+  background-color: white;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.leaderboard-container h1 {
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+  color: #2c3e50;
+}
+
+.leaderboard-desc {
+  color: #7f8c8d;
+  margin-bottom: 2rem;
+}
+
+.leaderboard-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+
+.leaderboard-table thead {
+  background-color: #ecf0f1;
+}
+
+.leaderboard-table th {
+  padding: 1rem;
+  text-align: left;
+  font-weight: 600;
+  color: #2c3e50;
+  border-bottom: 2px solid #bdc3c7;
+}
+
+.leaderboard-table td {
+  padding: 1rem;
+  border-bottom: 1px solid #ecf0f1;
+}
+
+.leaderboard-table tbody tr:hover {
+  background-color: #f8f9fa;
+}
+
+.leaderboard-table tbody tr.top-1 {
+  background-color: #fffbf0;
+}
+
+.leaderboard-table tbody tr.top-2 {
+  background-color: #f0f8ff;
+}
+
+.leaderboard-table tbody tr.top-3 {
+  background-color: #efe8f3;
+}
+
+.rank-col {
+  width: 60px;
+}
+
+.user-col {
+  flex: 1;
+}
+
+.score-col {
+  width: 80px;
+  text-align: right;
+}
+
+.rank-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: #3498db;
+  color: white;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.user-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.user-name {
+  color: #2c3e50;
+  font-weight: 500;
+}
+
+.no-data {
+  text-align: center;
+  padding: 2rem;
+  color: #7f8c8d;
+}
+
+@media (max-width: 768px) {
+  .leaderboard-page {
+    padding: 1rem;
+  }
+
+  .leaderboard-container {
+    padding: 1rem;
+  }
+
+  .leaderboard-table th,
+  .leaderboard-table td {
+    padding: 0.75rem 0.5rem;
+  }
+
+  .rank-col,
+  .score-col {
+    font-size: 0.875rem;
+  }
+}
