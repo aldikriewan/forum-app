@@ -44,6 +44,15 @@ function CommentItem({ comment, threadId }) {
     }
   };
 
+  const handleNeutralizeVote = () => {
+    if (!isLoggedIn) {
+      // eslint-disable-next-line no-alert
+      alert('Silakan login untuk memberikan vote');
+      return;
+    }
+    dispatch(neutralizeCommentVote({ threadId, commentId: id }));
+  };
+
   return (
     <div className="comment-item">
       <div className="comment-header">
@@ -82,6 +91,13 @@ function CommentItem({ comment, threadId }) {
           👎
           {' '}
           {downVotesBy.length}
+        </button>
+        <button
+          type="button"
+          onClick={handleNeutralizeVote}
+          className="vote-btn neutralize-vote"
+        >
+          😐
         </button>
         <span className="vote-total">Total: {totalVotes}</span>
       </div>

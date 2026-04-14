@@ -14,7 +14,7 @@ function HomePage() {
 
   useEffect(() => {
     dispatch(fetchThreads());
-  }, [dispatch]);
+  }, [ dispatch ]);
 
   // Get unique categories from threads
   const categories = [ ...new Set(threads.map((t) => t.category).filter(Boolean)) ];

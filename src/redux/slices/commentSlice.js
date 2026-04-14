@@ -15,14 +15,12 @@ const commentSlice = createSlice({
     setError(state, action) {
       state.error = action.payload;
     },
-    addCommentToThread(state, action) {
-      const { threadId, comment } = action.payload;
+    addCommentToThread(state) {
       // This will be handled by updating the thread detail in threadSlice
       state.loading = false;
       state.error = null;
     },
-    updateCommentVote(state, action) {
-      const { threadId, commentId, upVotesBy, downVotesBy } = action.payload;
+    updateCommentVote(state) {
       // This will be handled by updating the thread detail in threadSlice
       state.loading = false;
       state.error = null;

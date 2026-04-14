@@ -9,7 +9,7 @@ function LeaderboardPage() {
 
   useEffect(() => {
     dispatch(fetchLeaderboards());
-  }, [dispatch]);
+  }, [ dispatch ]);
 
   return (
     <div className="leaderboard-page">

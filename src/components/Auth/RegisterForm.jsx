@@ -43,7 +43,7 @@ function RegisterForm() {
     return newErrors;
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
     const newErrors = validateForm();
 
@@ -73,54 +73,62 @@ function RegisterForm() {
         {errors.submit && <div className="error-message">{errors.submit}</div>}
 
         <div className="form-group">
-          <label htmlFor="name">Full Name</label>
-          <input
-            id="name"
-            type="text"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            className={errors.name ? 'input-error' : ''}
-            placeholder="John Doe"
-          />
+          <label htmlFor="name">
+            Full Name
+            <input
+              id="name"
+              type="text"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              className={errors.name ? 'input-error' : ''}
+              placeholder="John Doe"
+            />
+          </label>
           {errors.name && <span className="error-text">{errors.name}</span>}
         </div>
 
         <div className="form-group">
-          <label htmlFor="email">Email</label>
-          <input
-            id="email"
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className={errors.email ? 'input-error' : ''}
-            placeholder="your@email.com"
-          />
+          <label htmlFor="email">
+            Email
+            <input
+              id="email"
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className={errors.email ? 'input-error' : ''}
+              placeholder="your@email.com"
+            />
+          </label>
           {errors.email && <span className="error-text">{errors.email}</span>}
         </div>
 
         <div className="form-group">
-          <label htmlFor="password">Password</label>
-          <input
-            id="password"
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            className={errors.password ? 'input-error' : ''}
-            placeholder="••••••"
-          />
+          <label htmlFor="password">
+            Password
+            <input
+              id="password"
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className={errors.password ? 'input-error' : ''}
+              placeholder="••••••"
+            />
+          </label>
           {errors.password && <span className="error-text">{errors.password}</span>}
         </div>
 
         <div className="form-group">
-          <label htmlFor="passwordConfirm">Confirm Password</label>
-          <input
-            id="passwordConfirm"
-            type="password"
-            value={passwordConfirm}
-            onChange={(e) => setPasswordConfirm(e.target.value)}
-            className={errors.passwordConfirm ? 'input-error' : ''}
-            placeholder="••••••"
-          />
+          <label htmlFor="passwordConfirm">
+            Confirm Password
+            <input
+              id="passwordConfirm"
+              type="password"
+              value={passwordConfirm}
+              onChange={(e) => setPasswordConfirm(e.target.value)}
+              className={errors.passwordConfirm ? 'input-error' : ''}
+              placeholder="••••••"
+            />
+          </label>
           {errors.passwordConfirm && <span className="error-text">{errors.passwordConfirm}</span>}
         </div>
 

@@ -1,6 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import apiClient from '../../api/apiClient';
 import { setThreadList, setThreadDetail, addThread } from '../slices/threadSlice';
+import { setUser } from '../slices/userSlice';
 import { setLoading } from '../slices/uiSlice';
 
 export const fetchThreads = createAsyncThunk(
@@ -28,6 +29,7 @@ export const fetchThreadDetail = createAsyncThunk(
       const response = await apiClient.get(`/threads/${threadId}`);
       const threadDetail = response.data.data.detailThread;
       dispatch(setThreadDetail(threadDetail));
+      dispatch(setUser(threadDetail.owner));
       dispatch(setLoading({ status: false }));
       return threadDetail;
     } catch (error) {
@@ -56,7 +58,7 @@ export const createThread = createAsyncThunk(
 
 export const upVoteThread = createAsyncThunk(
   'threads/upVoteThread',
-  async(threadId, { dispatch, rejectWithValue, getState }) => {
+  async(threadId, { dispatch, rejectWithValue }) => {
     try {
       await apiClient.post(`/threads/${threadId}/up-vote`);
       // Refresh thread detail

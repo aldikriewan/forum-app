@@ -1,15 +1,17 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { formatDate, truncateText, stripHtml } from '../../utils/helpers';
 import './Thread.css';
 
 function ThreadItem({ thread }) {
+  const users = useSelector((state) => state.users.users);
   const {
-    id, title, body, createdAt, owner, totalComments, upVotesBy, downVotesBy,
+    id, title, body, createdAt, ownerId, totalComments, upVotesBy, downVotesBy,
   } = thread;
 
-  const totalVotes = (upVotesBy?.length || 0) - (downVotesBy?.length || 0);
+  const authorName = users[ownerId]?.name || 'Loading...';
 
   return (
     <div className="thread-item">
@@ -23,7 +25,7 @@ function ThreadItem({ thread }) {
         <div className="thread-meta">
           <span className="author-info">
             by&nbsp;
-            <strong>{owner?.name}</strong>
+            <strong>{authorName}</strong>
           </span>
           <span className="separator">•</span>
           <span className="timestamp">{formatDate(createdAt)}</span>
@@ -37,7 +39,7 @@ function ThreadItem({ thread }) {
         </div>
         <div className="stat">
           <span className="stat-label">Votes</span>
-          <span className="stat-value">{totalVotes}</span>
+          <span className="stat-value">👍 {upVotesBy?.length || 0} | 👎 {downVotesBy?.length || 0}</span>
         </div>
       </div>
     </div>
@@ -50,10 +52,7 @@ ThreadItem.propTypes = {
     title: PropTypes.string.isRequired,
     body: PropTypes.string,
     createdAt: PropTypes.string.isRequired,
-    owner: PropTypes.shape({
-      name: PropTypes.string.isRequired,
-      avatar: PropTypes.string,
-    }).isRequired,
+    ownerId: PropTypes.string.isRequired,
     totalComments: PropTypes.number,
     upVotesBy: PropTypes.arrayOf(PropTypes.string),
     downVotesBy: PropTypes.arrayOf(PropTypes.string),

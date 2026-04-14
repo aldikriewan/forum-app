@@ -29,6 +29,11 @@ const threadSlice = createSlice({
       state.selectedThreadId = action.payload.id;
       state.loading = false;
       state.error = null;
+      // Update owner in list if the thread exists
+      const threadIndex = state.list.findIndex((t) => t.id === action.payload.id);
+      if (threadIndex !== -1) {
+        state.list[threadIndex].owner = action.payload.owner;
+      }
     },
     addThread(state, action) {
       state.list.unshift(action.payload);

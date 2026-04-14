@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams, useNavigate } from 'react-router-dom';
-import { fetchThreadDetail } from '../redux/thunks/threadThunks';
+import { fetchThreadDetail, upVoteThread, downVoteThread, neutralizeThreadVote } from '../redux/thunks/threadThunks';
 import { createComment } from '../redux/thunks/commentThunks';
 import { formatDate, decodeHtmlEntities } from '../utils/helpers';
 import CommentItem from '../components/Comment/CommentItem';
@@ -40,6 +40,30 @@ function ThreadDetailPage() {
     });
   };
 
+  const handleUpVote = () => {
+    if (!isLoggedIn) {
+      navigate('/login');
+      return;
+    }
+    dispatch(upVoteThread(threadId));
+  };
+
+  const handleDownVote = () => {
+    if (!isLoggedIn) {
+      navigate('/login');
+      return;
+    }
+    dispatch(downVoteThread(threadId));
+  };
+
+  const handleNeutralizeVote = () => {
+    if (!isLoggedIn) {
+      navigate('/login');
+      return;
+    }
+    dispatch(neutralizeThreadVote(threadId));
+  };
+
   if (!threadDetail) {
     return <div className="thread-detail-loading">Memuat thread...</div>;
   }
@@ -47,7 +71,6 @@ function ThreadDetailPage() {
   const {
     title, body, createdAt, owner, comments = [], upVotesBy = [], downVotesBy = [],
   } = threadDetail;
-  const totalVotes = upVotesBy.length - downVotesBy.length;
 
   return (
     <div className="thread-detail-page">
@@ -72,7 +95,11 @@ function ThreadDetailPage() {
             </div>
 
             <div className="thread-votes">
-              <span>👍 {upVotesBy.length} | 👎 {downVotesBy.length}</span>
+              <button type="button" onClick={handleUpVote} className="vote-btn">👍</button>
+              <span>{upVotesBy.length}</span>
+              <button type="button" onClick={handleDownVote} className="vote-btn">👎</button>
+              <span>{downVotesBy.length}</span>
+              <button type="button" onClick={handleNeutralizeVote} className="vote-btn">😐</button>
             </div>
           </div>
         </header>
