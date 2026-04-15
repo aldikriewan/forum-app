@@ -1,10 +1,9 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import apiClient from '../../api/apiClient';
-import { loginSuccess, registerSuccess } from '../slices/authSlice';
 
 export const loginUser = createAsyncThunk(
   'auth/loginUser',
-  async({ email, password }, { dispatch, rejectWithValue }) => {
+  async({ email, password }, { rejectWithValue }) => {
     try {
       const response = await apiClient.post('/login', { email, password });
       const { token } = response.data.data;
@@ -15,7 +14,6 @@ export const loginUser = createAsyncThunk(
       });
       const { user } = userResponse.data.data;
 
-      dispatch(loginSuccess({ token, user }));
       return { token, user };
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || 'Login failed');
@@ -25,11 +23,10 @@ export const loginUser = createAsyncThunk(
 
 export const registerUser = createAsyncThunk(
   'auth/registerUser',
-  async({ name, email, password }, { dispatch, rejectWithValue }) => {
+  async({ name, email, password }, { rejectWithValue }) => {
     try {
       const response = await apiClient.post('/register', { name, email, password });
       const { user } = response.data.data;
-      dispatch(registerSuccess(user));
       return user;
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || 'Registration failed');
