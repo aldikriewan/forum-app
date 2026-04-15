@@ -10,7 +10,6 @@ import {
 } from '../slices/threadSlice';
 import { setUser, setUsers } from '../slices/userSlice';
 import { setLoading } from '../slices/uiSlice';
-import { fetchUsers } from './userThunks';
 
 export const asyncPopulateUsersAndThreads = createAsyncThunk(
   'shared/asyncPopulateUsersAndThreads',
@@ -136,8 +135,6 @@ export const neutralizeThreadVote = createAsyncThunk(
     // We need to keep track of current state for rollback because neutralize is not a toggle
     const { threads: { list, detailMap } } = getState();
     const thread = list.find((t) => t.id === threadId) || detailMap[threadId];
-    const prevUpVotesBy = [ ...thread.upVotesBy ];
-    const prevDownVotesBy = [ ...thread.downVotesBy ];
 
     dispatch(toggleNeutralVote({ threadId, userId }));
 
