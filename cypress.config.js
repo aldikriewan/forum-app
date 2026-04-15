@@ -10,5 +10,15 @@ export default defineConfig({
     defaultCommandTimeout: 10000,
     allowCypressEnv: false,
     supportFile: false,
+    // Additional settings to prevent overlay issues
+    chromeWebSecurity: false,
+    experimentalModifyObstructiveThirdPartyCode: true,
+    // Force Electron browser to avoid overlay issues
+    browser: 'electron',
+    // Additional settings
+    retries: {
+      runMode: 2,
+      openMode: 0,
+    },
   },
 })

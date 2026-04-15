@@ -16,37 +16,59 @@ function LoginForm() {
   const validateForm = () => {
     const newErrors = {};
 
+    console.log('VALIDATE FORM - Email:', email, 'Password:', password);
+
     if (!email) {
       newErrors.email = 'Email is required';
+      console.log('Email is empty');
     } else if (!isValidEmail(email)) {
       newErrors.email = 'Email is invalid';
+      console.log('Email is invalid:', email);
     }
 
     if (!password) {
       newErrors.password = 'Password is required';
+      console.log('Password is empty');
     } else if (password.length < 6) {
       newErrors.password = 'Password must be at least 6 characters';
+      console.log('Password too short:', password.length);
     }
 
+    console.log('Validation result:', newErrors);
     return newErrors;
   };
 
   const handleSubmit = async(e) => {
     e.preventDefault();
+
+    console.log('=== FORM SUBMIT STARTED ===');
+    console.log('Email:', email, 'Password:', password);
+
     const newErrors = validateForm();
+    console.log('Validation result:', newErrors);
 
     if (Object.keys(newErrors).length > 0) {
+      console.log('Setting validation errors:', newErrors);
       setErrors(newErrors);
+      // Force re-render to show errors
+      setTimeout(() => console.log('Errors should be visible now'), 100);
       return;
     }
 
+    console.log('No validation errors, proceeding with login...');
+    setErrors({}); // Clear previous errors
+
     try {
+      console.log('Dispatching login action...');
       const result = await dispatch(loginUser({ email, password })).unwrap();
+      console.log('Login successful:', result);
       if (result) {
-        navigate('/');
+        console.log('Redirecting to home...');
+        window.location.href = '/';
       }
     } catch (err) {
-      setErrors({ submit: err });
+      console.error('Login failed with error:', err);
+      setErrors({ submit: err || 'Login failed' });
     }
   };
 
@@ -55,8 +77,9 @@ function LoginForm() {
       <form onSubmit={handleSubmit} className="auth-form">
         <h2>Login</h2>
 
-        {error && <div className="error-message">{error}</div>}
-        {errors.submit && <div className="error-message">{errors.submit}</div>}
+
+        {error && <div className="error-message" data-testid="redux-error">{error}</div>}
+        {errors.submit && <div className="error-message" data-testid="submit-error">{errors.submit}</div>}
 
         <div className="form-group">
           <label htmlFor="email">

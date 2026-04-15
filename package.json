@@ -28,7 +28,8 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "lint": "eslint src/",
-    "e2e": "cypress run"
+    "e2e": "cypress run",
+    "start:e2e": "cross-env DISABLE_ESLINT_PLUGIN=true react-scripts start"
   },
   "eslintConfig": {
     "extends": [
@@ -62,6 +63,7 @@
     ]
   },
   "devDependencies": {
+    "cross-env": "^10.1.0",
     "eslint": "^8.57.1",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-plugin-import": "^2.32.0",

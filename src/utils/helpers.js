@@ -58,7 +58,8 @@ export const getUserInitials = (name) => {
 
 // Validate email
 export const isValidEmail = (email) => {
-  const emailRegex = /^[^s@]+@[^s@]+.[^s@]+$/;
+  // Simple email validation - must contain @ and . with no spaces
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   return emailRegex.test(email);
 };
 
