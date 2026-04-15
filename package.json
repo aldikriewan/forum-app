@@ -2,6 +2,9 @@
   "name": "forum-app",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": ">=18.0.0"
+  },
   "dependencies": {
     "@reduxjs/toolkit": "^2.11.2",
     "@testing-library/dom": "^10.4.1",
@@ -15,6 +18,7 @@
     "react-redux": "^9.2.0",
     "react-router-dom": "^7.14.1",
     "react-scripts": "5.0.1",
+    "styled-components": "^6.4.0",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
@@ -22,14 +26,27 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "lint": "eslint src/"
+    "lint": "eslint src/",
+    "e2e": "cypress run"
   },
   "eslintConfig": {
     "extends": [
       "react-app",
       "react-app/jest",
       "airbnb"
-    ]
+    ],
+    "env": {
+      "jest": true
+    },
+    "rules": {
+      "no-unused-vars": "warn",
+      "no-trailing-spaces": "off"
+    }
+  },
+  "jest": {
+    "moduleNameMapper": {
+      "^react-router-dom$": "<rootDir>/src/__mocks__/react-router-dom.js"
+    }
   },
   "browserslist": {
     "production": [
@@ -44,6 +61,7 @@
     ]
   },
   "devDependencies": {
+    "cypress": "^15.13.1",
     "eslint": "^8.57.1",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-plugin-import": "^2.32.0",
