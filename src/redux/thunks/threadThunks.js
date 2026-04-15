@@ -132,10 +132,6 @@ export const neutralizeThreadVote = createAsyncThunk(
     const { auth } = getState();
     const userId = auth.user.id;
 
-    // We need to keep track of current state for rollback because neutralize is not a toggle
-    const { threads: { list, detailMap } } = getState();
-    const thread = list.find((t) => t.id === threadId) || detailMap[threadId];
-
     dispatch(toggleNeutralVote({ threadId, userId }));
 
     try {
