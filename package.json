@@ -34,7 +34,14 @@
       "react-app",
       "react-app/jest",
       "airbnb"
-    ]
+    ],
+    "env": {
+      "jest": true
+    },
+    "rules": {
+      "no-unused-vars": "warn",
+      "no-trailing-spaces": "off"
+    }
   },
   "jest": {
     "moduleNameMapper": {

@@ -1,9 +1,19 @@
 import React from 'react';
 
-export const useNavigate = () => jest.fn();
+function mockJest() {
+  return jest.fn ? jest.fn() : function() {};
+}
 
-export const Link = ({ children, to }) => <a href={to}>{children}</a>;
+export const useNavigate = mockJest;
 
-export const useParams = () => ({});
+export const Link = function Link(props) {
+  return React.createElement('a', { href: props.to }, props.children);
+};
 
-export const useLocation = () => ({ pathname: '/' });
+export const useParams = function() {
+  return {};
+};
+
+export const useLocation = function() {
+  return { pathname: '/' };
+};
