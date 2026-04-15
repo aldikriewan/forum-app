@@ -1,19 +1,24 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
-function mockJest() {
-  return jest.fn ? jest.fn() : function() {};
-}
+const mockJest = () => (jest.fn ? jest.fn() : function mockFn() {});
 
 export const useNavigate = mockJest;
 
-export const Link = function Link(props) {
-  return React.createElement('a', { href: props.to }, props.children);
+export const Link = function Link({ to, children }) {
+  return React.createElement('a', { href: to }, children);
 };
 
-export const useParams = function() {
-  return {};
+Link.propTypes = {
+  to: PropTypes.string,
+  children: PropTypes.node,
 };
 
-export const useLocation = function() {
-  return { pathname: '/' };
+Link.defaultProps = {
+  to: '',
+  children: null,
 };
+
+export const useParams = () => ({});
+
+export const useLocation = () => ({ pathname: '/' });

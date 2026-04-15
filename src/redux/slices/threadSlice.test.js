@@ -12,7 +12,7 @@ import threadReducer, {
   toggleCommentUpVote,
   toggleCommentDownVote,
   toggleCommentNeutralVote,
-} from '../../redux/slices/threadSlice';
+} from './threadSlice';
 
 describe('threadSlice reducer', () => {
   const initialState = {
@@ -95,7 +95,7 @@ describe('threadSlice reducer', () => {
   describe('addThread', () => {
     it('should add thread to the beginning of the list', () => {
       const existingThread = { id: '1', title: 'Existing' };
-      const stateWithList = { ...initialState, list: [existingThread] };
+      const stateWithList = { ...initialState, list: [ existingThread ] };
       const newThread = { id: '2', title: 'New Thread' };
 
       const newState = threadReducer(stateWithList, addThread(newThread));
@@ -128,26 +128,26 @@ describe('threadSlice reducer', () => {
       };
       const newState = threadReducer(
         stateWithList,
-        updateThreadVote({ threadId: '1', upVotesBy: ['user-1'], downVotesBy: ['user-2'] })
+        updateThreadVote({ threadId: '1', upVotesBy: [ 'user-1' ], downVotesBy: [ 'user-2' ] }),
       );
 
-      expect(newState.list[0].upVotesBy).toEqual(['user-1']);
-      expect(newState.list[0].downVotesBy).toEqual(['user-2']);
+      expect(newState.list[0].upVotesBy).toEqual([ 'user-1' ]);
+      expect(newState.list[0].downVotesBy).toEqual([ 'user-2' ]);
     });
 
     it('should update vote in detailMap', () => {
       const stateWithDetail = {
         ...initialState,
         detailMap: {
-          '1': { id: '1', title: 'Thread', upVotesBy: [], downVotesBy: [] },
+          1: { id: '1', title: 'Thread', upVotesBy: [], downVotesBy: [] },
         },
       };
       const newState = threadReducer(
         stateWithDetail,
-        updateThreadVote({ threadId: '1', upVotesBy: ['user-1'], downVotesBy: [] })
+        updateThreadVote({ threadId: '1', upVotesBy: [ 'user-1' ], downVotesBy: [] }),
       );
 
-      expect(newState.detailMap['1'].upVotesBy).toEqual(['user-1']);
+      expect(newState.detailMap['1'].upVotesBy).toEqual([ 'user-1' ]);
     });
   });
 
@@ -161,7 +161,7 @@ describe('threadSlice reducer', () => {
       };
       const newState = threadReducer(
         stateWithThread,
-        toggleUpVote({ threadId: '1', userId: 'user-1' })
+        toggleUpVote({ threadId: '1', userId: 'user-1' }),
       );
 
       expect(newState.list[0].upVotesBy).toContain('user-1');
@@ -172,12 +172,12 @@ describe('threadSlice reducer', () => {
       const stateWithThread = {
         ...initialState,
         list: [
-          { id: '1', title: 'Thread', upVotesBy: ['user-1'], downVotesBy: [] },
+          { id: '1', title: 'Thread', upVotesBy: [ 'user-1' ], downVotesBy: [] },
         ],
       };
       const newState = threadReducer(
         stateWithThread,
-        toggleUpVote({ threadId: '1', userId: 'user-1' })
+        toggleUpVote({ threadId: '1', userId: 'user-1' }),
       );
 
       expect(newState.list[0].upVotesBy).not.toContain('user-1');
@@ -187,12 +187,12 @@ describe('threadSlice reducer', () => {
       const stateWithThread = {
         ...initialState,
         list: [
-          { id: '1', title: 'Thread', upVotesBy: [], downVotesBy: ['user-1'] },
+          { id: '1', title: 'Thread', upVotesBy: [], downVotesBy: [ 'user-1' ] },
         ],
       };
       const newState = threadReducer(
         stateWithThread,
-        toggleUpVote({ threadId: '1', userId: 'user-1' })
+        toggleUpVote({ threadId: '1', userId: 'user-1' }),
       );
 
       expect(newState.list[0].upVotesBy).toContain('user-1');
@@ -210,7 +210,7 @@ describe('threadSlice reducer', () => {
       };
       const newState = threadReducer(
         stateWithThread,
-        toggleDownVote({ threadId: '1', userId: 'user-1' })
+        toggleDownVote({ threadId: '1', userId: 'user-1' }),
       );
 
       expect(newState.list[0].downVotesBy).toContain('user-1');
@@ -220,12 +220,12 @@ describe('threadSlice reducer', () => {
       const stateWithThread = {
         ...initialState,
         list: [
-          { id: '1', title: 'Thread', upVotesBy: [], downVotesBy: ['user-1'] },
+          { id: '1', title: 'Thread', upVotesBy: [], downVotesBy: [ 'user-1' ] },
         ],
       };
       const newState = threadReducer(
         stateWithThread,
-        toggleDownVote({ threadId: '1', userId: 'user-1' })
+        toggleDownVote({ threadId: '1', userId: 'user-1' }),
       );
 
       expect(newState.list[0].downVotesBy).not.toContain('user-1');
@@ -237,16 +237,16 @@ describe('threadSlice reducer', () => {
       const stateWithThread = {
         ...initialState,
         list: [
-          { id: '1', title: 'Thread', upVotesBy: ['user-1'], downVotesBy: ['user-2'] },
+          { id: '1', title: 'Thread', upVotesBy: [ 'user-1' ], downVotesBy: [ 'user-2' ] },
         ],
       };
       const newState = threadReducer(
         stateWithThread,
-        toggleNeutralVote({ threadId: '1', userId: 'user-1' })
+        toggleNeutralVote({ threadId: '1', userId: 'user-1' }),
       );
 
       expect(newState.list[0].upVotesBy).not.toContain('user-1');
-      expect(newState.list[0].downVotesBy).toEqual(['user-2']);
+      expect(newState.list[0].downVotesBy).toEqual([ 'user-2' ]);
     });
   });
 
@@ -255,7 +255,7 @@ describe('threadSlice reducer', () => {
       const stateWithThread = {
         ...initialState,
         detailMap: {
-          '1': {
+          1: {
             id: '1',
             title: 'Thread',
             comments: [
@@ -266,7 +266,7 @@ describe('threadSlice reducer', () => {
       };
       const newState = threadReducer(
         stateWithThread,
-        toggleCommentUpVote({ threadId: '1', commentId: 'comment-1', userId: 'user-1' })
+        toggleCommentUpVote({ threadId: '1', commentId: 'comment-1', userId: 'user-1' }),
       );
 
       expect(newState.detailMap['1'].comments[0].upVotesBy).toContain('user-1');
@@ -278,7 +278,7 @@ describe('threadSlice reducer', () => {
       const stateWithThread = {
         ...initialState,
         detailMap: {
-          '1': {
+          1: {
             id: '1',
             title: 'Thread',
             comments: [
@@ -289,7 +289,7 @@ describe('threadSlice reducer', () => {
       };
       const newState = threadReducer(
         stateWithThread,
-        toggleCommentDownVote({ threadId: '1', commentId: 'comment-1', userId: 'user-1' })
+        toggleCommentDownVote({ threadId: '1', commentId: 'comment-1', userId: 'user-1' }),
       );
 
       expect(newState.detailMap['1'].comments[0].downVotesBy).toContain('user-1');
@@ -301,18 +301,18 @@ describe('threadSlice reducer', () => {
       const stateWithThread = {
         ...initialState,
         detailMap: {
-          '1': {
+          1: {
             id: '1',
             title: 'Thread',
             comments: [
-              { id: 'comment-1', upVotesBy: ['user-1'], downVotesBy: ['user-2'] },
+              { id: 'comment-1', upVotesBy: [ 'user-1' ], downVotesBy: [ 'user-2' ] },
             ],
           },
         },
       };
       const newState = threadReducer(
         stateWithThread,
-        toggleCommentNeutralVote({ threadId: '1', commentId: 'comment-1', userId: 'user-1' })
+        toggleCommentNeutralVote({ threadId: '1', commentId: 'comment-1', userId: 'user-1' }),
       );
 
       expect(newState.detailMap['1'].comments[0].upVotesBy).not.toContain('user-1');

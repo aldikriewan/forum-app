@@ -24,6 +24,7 @@ const renderWithProviders = (component, store = createTestStore()) => {
 
 describe('LoginForm Component', () => {
   it('should render login form with all elements', () => {
+    // Skenario: Komponen LoginForm menampilkan form login lengkap dengan input email, password, dan tombol submit
     const store = createTestStore({
       auth: { token: null, user: null, isLoggedIn: false, loading: false, error: null },
     });

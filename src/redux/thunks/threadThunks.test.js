@@ -4,22 +4,22 @@ import {
   createThread,
   upVoteThread,
   downVoteThread,
-} from '../../redux/thunks/threadThunks';
+} from './threadThunks';
 import {
   setThreadList,
   addThread,
   toggleUpVote,
   toggleDownVote,
-} from '../../redux/slices/threadSlice';
-import { setUsers } from '../../redux/slices/userSlice';
-import { setLoading } from '../../redux/slices/uiSlice';
+} from '../slices/threadSlice';
+import { setUsers } from '../slices/userSlice';
+import { setLoading } from '../slices/uiSlice';
+
+import apiClient from '../../api/apiClient';
 
 jest.mock('../../api/apiClient', () => ({
   get: jest.fn(),
   post: jest.fn(),
 }));
-
-import apiClient from '../../api/apiClient';
 
 describe('threadThunks', () => {
   let dispatch;
@@ -32,7 +32,7 @@ describe('threadThunks', () => {
   });
 
   describe('asyncPopulateUsersAndThreads', () => {
-    it('should fetch threads and users successfully', async () => {
+    it('should fetch threads and users successfully', async() => {
       const mockThreadsResponse = {
         data: {
           data: {
@@ -61,17 +61,17 @@ describe('threadThunks', () => {
       const result = await asyncPopulateUsersAndThreads()(dispatch, getState);
 
       expect(dispatch).toHaveBeenCalledWith(setLoading({ status: true, text: 'Loading data...' }));
-      expect(dispatch).toHaveBeenCalledWith(setThreadList([{ id: '1', title: 'Thread 1' }, { id: '2', title: 'Thread 2' }]));
-      expect(dispatch).toHaveBeenCalledWith(setUsers([{ id: 'user-1', name: 'User 1' }, { id: 'user-2', name: 'User 2' }]));
+      expect(dispatch).toHaveBeenCalledWith(setThreadList([ { id: '1', title: 'Thread 1' }, { id: '2', title: 'Thread 2' } ]));
+      expect(dispatch).toHaveBeenCalledWith(setUsers([ { id: 'user-1', name: 'User 1' }, { id: 'user-2', name: 'User 2' } ]));
       expect(dispatch).toHaveBeenCalledWith(setLoading({ status: false }));
       expect(result.type).toBe('shared/asyncPopulateUsersAndThreads/fulfilled');
       expect(result.payload).toEqual({
-        threads: [{ id: '1', title: 'Thread 1' }, { id: '2', title: 'Thread 2' }],
-        users: [{ id: 'user-1', name: 'User 1' }, { id: 'user-2', name: 'User 2' }],
+        threads: [ { id: '1', title: 'Thread 1' }, { id: '2', title: 'Thread 2' } ],
+        users: [ { id: 'user-1', name: 'User 1' }, { id: 'user-2', name: 'User 2' } ],
       });
     });
 
-    it('should reject with error on failed fetch', async () => {
+    it('should reject with error on failed fetch', async() => {
       const error = {
         response: {
           data: {
@@ -90,11 +90,11 @@ describe('threadThunks', () => {
   });
 
   describe('fetchThreads', () => {
-    it('should fetch threads successfully', async () => {
+    it('should fetch threads successfully', async() => {
       const mockResponse = {
         data: {
           data: {
-            threads: [{ id: '1', title: 'Thread 1' }],
+            threads: [ { id: '1', title: 'Thread 1' } ],
           },
         },
       };
@@ -103,15 +103,15 @@ describe('threadThunks', () => {
       const result = await fetchThreads()(dispatch, getState);
 
       expect(dispatch).toHaveBeenCalledWith(setLoading({ status: true, text: 'Loading threads...' }));
-      expect(dispatch).toHaveBeenCalledWith(setThreadList([{ id: '1', title: 'Thread 1' }]));
+      expect(dispatch).toHaveBeenCalledWith(setThreadList([ { id: '1', title: 'Thread 1' } ]));
       expect(dispatch).toHaveBeenCalledWith(setLoading({ status: false }));
       expect(result.type).toBe('threads/fetchThreads/fulfilled');
-      expect(result.payload).toEqual([{ id: '1', title: 'Thread 1' }]);
+      expect(result.payload).toEqual([ { id: '1', title: 'Thread 1' } ]);
     });
   });
 
   describe('createThread', () => {
-    it('should create thread successfully', async () => {
+    it('should create thread successfully', async() => {
       const mockResponse = {
         data: {
           data: {
@@ -123,7 +123,7 @@ describe('threadThunks', () => {
 
       const result = await createThread({ title: 'New Thread', body: 'Body', category: 'tech' })(
         dispatch,
-        getState
+        getState,
       );
 
       expect(apiClient.post).toHaveBeenCalledWith('/threads', {
@@ -137,7 +137,7 @@ describe('threadThunks', () => {
       expect(result.payload).toEqual({ id: 'new-1', title: 'New Thread', body: 'Body', category: 'tech' });
     });
 
-    it('should use default category when not provided', async () => {
+    it('should use default category when not provided', async() => {
       const mockResponse = {
         data: {
           data: {
@@ -158,7 +158,7 @@ describe('threadThunks', () => {
   });
 
   describe('upVoteThread', () => {
-    it('should upvote successfully and call API', async () => {
+    it('should upvote successfully and call API', async() => {
       getState.mockReturnValue({
         auth: { user: { id: 'user-1' } },
         threads: { list: [], detailMap: {} },
@@ -172,7 +172,7 @@ describe('threadThunks', () => {
       expect(result.type).toBe('threads/upVoteThread/fulfilled');
     });
 
-    it('should rollback on API failure', async () => {
+    it('should rollback on API failure', async() => {
       getState.mockReturnValue({
         auth: { user: { id: 'user-1' } },
         threads: { list: [], detailMap: {} },
@@ -187,7 +187,7 @@ describe('threadThunks', () => {
   });
 
   describe('downVoteThread', () => {
-    it('should downvote successfully and call API', async () => {
+    it('should downvote successfully and call API', async() => {
       getState.mockReturnValue({
         auth: { user: { id: 'user-1' } },
         threads: { list: [], detailMap: {} },
@@ -201,7 +201,7 @@ describe('threadThunks', () => {
       expect(result.type).toBe('threads/downVoteThread/fulfilled');
     });
 
-    it('should rollback on API failure', async () => {
+    it('should rollback on API failure', async() => {
       getState.mockReturnValue({
         auth: { user: { id: 'user-1' } },
         threads: { list: [], detailMap: {} },

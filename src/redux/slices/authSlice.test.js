@@ -4,7 +4,7 @@ import authReducer, {
   loginSuccess,
   registerSuccess,
   logout,
-} from '../../redux/slices/authSlice';
+} from './authSlice';
 
 const mockLocalStorage = {
   setItem: jest.fn(),
@@ -88,7 +88,7 @@ describe('authSlice reducer', () => {
       expect(localStorage.setItem).toHaveBeenCalledWith('token', 'test-token-456');
       expect(localStorage.setItem).toHaveBeenCalledWith(
         'user',
-        JSON.stringify(payload.user)
+        JSON.stringify(payload.user),
       );
     });
   });
