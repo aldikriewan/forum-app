@@ -20,15 +20,12 @@ jobs:
           node-version: '24'
       
       - name: Install dependencies
-        working-directory: ./forum-app
         run: npm ci
       
       - name: Run linter
-        working-directory: ./forum-app
         run: npm run lint
       
       - name: Run unit tests
-        working-directory: ./forum-app
         run: npm test -- --watchAll=false --passWithNoTests
 
   build:
@@ -45,9 +42,7 @@ jobs:
           node-version: '24'
       
       - name: Install dependencies
-        working-directory: ./forum-app
         run: npm ci
       
       - name: Build application
-        working-directory: ./forum-app
         run: npm run build
